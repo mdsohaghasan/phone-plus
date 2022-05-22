@@ -12,15 +12,16 @@ app.use(express.json())
 
 // MONGODB CONNECTION
 
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.fb0jm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pajtj.mongodb.net/?retryWrites=true&w=majority`;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 // DATABASE CONNECTION
 async function run() {
     try {
         await client.connect();
-        const inventoryCollection = client.db('warehouse').collection('Items');
-        const myCollection = client.db('warehouse').collection('MyItems');
+        const usersCollection = client.db('phoneplus').collection('users');
+        const productsCollection = client.db('phoneplus').collection('products');
+        const reviewsCollection = client.db('phoneplus').collection('reviews');
         console.log('Database Connect Hoise')
 
         //VERIFY JWT
@@ -112,13 +113,13 @@ async function run() {
 
         // //=========== START INVENTORY ITEM ENDPOINT ============
 
-        // // PRODUCT ITEM ALL LOAD 
-        // // app.get('/Items', async (req, res) => {
-        // //     const query = {};
-        // //     const cursor = inventoryCollection.find(query);
-        // //     const items = await cursor.toArray();
-        // //     res.send(items)
-        // // });  
+        // PRODUCT ITEM ALL LOAD 
+        app.get('/products', async (req, res) => {
+            const query = {};
+            const cursor = productsCollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items)
+        });
 
         // // PRODUCT ITEM ALL LOAD 
         // app.get('/Items', async (req, res) => {
