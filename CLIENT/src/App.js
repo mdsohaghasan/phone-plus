@@ -12,9 +12,6 @@ function App() {
       <button class="btn btn-primary">Button</button>
       <button class="rounded-full ...">Save Changes</button>
 
-      <button class="btn btn-primary rounded-r-lg text-rose-500">Button</button>
-      <button class="btn btn-primary rounded-r-lg text-rose-500">Button</button>
-
     </div>
   );
 }
