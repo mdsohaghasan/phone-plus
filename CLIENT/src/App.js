@@ -12,6 +12,7 @@ import SignIn from './Pages/SignIn/SignIn';
 import SignUp from './Pages/SignUp/SignUp';
 import NotFound from './Pages/NotFound/NotFound';
 import Purchase from './Pages/Purchase/Purchase';
+import Footer from './Components/Footer/Footer';
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
         <Route path="/*" element={<NotFound></NotFound>} />
       </Routes>
 
-
+      <Footer></Footer>
     </div>
   );
 }
