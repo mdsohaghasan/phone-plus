@@ -24,25 +24,25 @@ async function run() {
         console.log('Database Connect Hoise')
 
         //VERIFY JWT
-        function verifyJWT(req, res, next) {
-            const authHeader = req.headers.authorization
-            if (!authHeader) {
-                if (!authHeader) {
-                    console.log('test ', authHeader)
-                    return res.status(401).send({ messege: 'unauthorized accsess' })
-                }
-                const accsessToken = authHeader.split(' ')[1];
-                jwt.verify(accsessToken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-                    console.log('test tokemn', accsessToken)
-                    if (err) {
-                        return res.status(403).send({ messege: 'FORBIDDEN accsess' });
-                    }
-                    req.decoded = decoded
-                })
+        // function verifyJWT(req, res, next) {
+        //     const authHeader = req.headers.authorization
+        //     if (!authHeader) {
+        //         if (!authHeader) {
+        //             console.log('test ', authHeader)
+        //             return res.status(401).send({ messege: 'unauthorized accsess' })
+        //         }
+        //         const accsessToken = authHeader.split(' ')[1];
+        //         jwt.verify(accsessToken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        //             console.log('test tokemn', accsessToken)
+        //             if (err) {
+        //                 return res.status(403).send({ messege: 'FORBIDDEN accsess' });
+        //             }
+        //             req.decoded = decoded
+        //         })
 
-                next()
-            }
-        }
+        //         next()
+        //     }
+        // }
 
         // // AUTH USER LOGIN 
         // app.post('/Signin', async (req, res) => {
@@ -198,7 +198,7 @@ run().catch(console.dir);
 
 // ROOT ENDPOINT 
 app.get('/', (req, res) => {
-    res.send(' Hello From Warehouse Server !')
+    res.send(' Hello From phone plus Server !')
 })
 
 // PORT
