@@ -12,37 +12,38 @@ app.use(express.json())
 
 // MONGODB CONNECTION
 
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.fb0jm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pajtj.mongodb.net/?retryWrites=true&w=majority`;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 // DATABASE CONNECTION
 async function run() {
     try {
         await client.connect();
-        const inventoryCollection = client.db('warehouse').collection('Items');
-        const myCollection = client.db('warehouse').collection('MyItems');
+        const usersCollection = client.db('phoneplus').collection('users');
+        const productsCollection = client.db('phoneplus').collection('products');
+        const reviewsCollection = client.db('phoneplus').collection('reviews');
         console.log('Database Connect Hoise')
 
         //VERIFY JWT
-        function verifyJWT(req, res, next) {
-            const authHeader = req.headers.authorization
-            if (!authHeader) {
-                if (!authHeader) {
-                    console.log('test ', authHeader)
-                    return res.status(401).send({ messege: 'unauthorized accsess' })
-                }
-                const accsessToken = authHeader.split(' ')[1];
-                jwt.verify(accsessToken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-                    console.log('test tokemn', accsessToken)
-                    if (err) {
-                        return res.status(403).send({ messege: 'FORBIDDEN accsess' });
-                    }
-                    req.decoded = decoded
-                })
+        // function verifyJWT(req, res, next) {
+        //     const authHeader = req.headers.authorization
+        //     if (!authHeader) {
+        //         if (!authHeader) {
+        //             console.log('test ', authHeader)
+        //             return res.status(401).send({ messege: 'unauthorized accsess' })
+        //         }
+        //         const accsessToken = authHeader.split(' ')[1];
+        //         jwt.verify(accsessToken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        //             console.log('test tokemn', accsessToken)
+        //             if (err) {
+        //                 return res.status(403).send({ messege: 'FORBIDDEN accsess' });
+        //             }
+        //             req.decoded = decoded
+        //         })
 
-                next()
-            }
-        }
+        //         next()
+        //     }
+        // }
 
         // // AUTH USER LOGIN 
         // app.post('/Signin', async (req, res) => {
@@ -112,13 +113,13 @@ async function run() {
 
         // //=========== START INVENTORY ITEM ENDPOINT ============
 
-        // // PRODUCT ITEM ALL LOAD 
-        // // app.get('/Items', async (req, res) => {
-        // //     const query = {};
-        // //     const cursor = inventoryCollection.find(query);
-        // //     const items = await cursor.toArray();
-        // //     res.send(items)
-        // // });  
+        // PRODUCT ITEM ALL LOAD 
+        app.get('/products', async (req, res) => {
+            const query = {};
+            const cursor = productsCollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items)
+        });
 
         // // PRODUCT ITEM ALL LOAD 
         // app.get('/Items', async (req, res) => {
@@ -198,7 +199,7 @@ run().catch(console.dir);
 
 // ROOT ENDPOINT 
 app.get('/', (req, res) => {
-    res.send(' Hello From Warehouse Server !')
+    res.send(' Hello From phone plus Server !')
 })
 
 // PORT
