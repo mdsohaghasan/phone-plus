@@ -31,6 +31,7 @@ function App() {
         <Route path="dashboard" element={<Dashboard></Dashboard>} />
         <Route path="myAccount" element={<MyAccount></MyAccount>} />
         <Route path="/*" element={<NotFound></NotFound>} />
+        <Route path="/productDetails/:id" element={<Purchase></Purchase>}></Route>
       </Routes>
 
       <Footer></Footer>
