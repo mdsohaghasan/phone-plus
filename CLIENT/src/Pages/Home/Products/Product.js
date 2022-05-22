@@ -8,7 +8,7 @@ const Product = ({ product }) => {
             <figure><img src="https://api.lorem.space/image/shoes?w=400&h=225" alt="Shoes" /></figure>
             <div class="card-body">
                 <h2 class="card-title">{product.name}</h2>
-                {/* <p>{Product.description}</p> */}
+                <p>{product.description}</p>
                 <div class="card-actions justify-end">
                     <button class="btn btn-primary">Buy Now</button>
                 </div>
