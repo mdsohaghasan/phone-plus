@@ -3,14 +3,37 @@ import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-fireba
 import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import Loading from '../../Components/Loading/Loading';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const SignIn = () => {
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
 
+    let signInError;
+    const navigate = useNavigate();
+    const location = useLocation();
+    let from = location.state?.from?.pathname || "/";
     if (user) {
-        console.log(user)
+        navigate(from, { replace: true });
     }
+
+
+    if (loading || gLoading) {
+        return <Loading></Loading>
+    }
+
+    if (error || gError) {
+        signInError = <p className='text-red-500'><small>{error?.message || gError?.message}</small></p>
+    }
+
+
     const onSubmit = data => {
         signInWithEmailAndPassword(data.email, data.password);
     }
@@ -64,7 +87,7 @@ const SignIn = () => {
                                     {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                     {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                 </label>
-                                {/* {signInError} */}
+                                {signInError}
                                 <label class="label">
                                     <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
