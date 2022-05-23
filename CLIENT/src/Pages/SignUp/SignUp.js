@@ -1,6 +1,11 @@
 import React from 'react'
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 
 const SignUp = () => {
+    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+
+
     return (
         <div class="hero min-h-screen bg-base-200">
             <div class="hero-content flex-col lg:flex-row-reverse px-10">
@@ -29,10 +34,7 @@ const SignUp = () => {
                             <button class="btn btn-primary">Login</button>
                         </div>
                         <div class="divider">OR</div>
-                        <div>
-                            <button class="btn btn-active btn-primary m-3">Login With Google</button>
-                            <button class="btn btn-active btn-primary ">Login With Github</button>
-                        </div>
+                        <button onClick={() => signInWithGoogle()} class="btn btn-active btn-primary m-3">Login With Google</button>
                     </div>
                 </div>
             </div>
