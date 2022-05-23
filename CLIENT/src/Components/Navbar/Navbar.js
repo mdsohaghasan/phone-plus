@@ -10,7 +10,7 @@ const Navbar = () => {
 
     // const logout = () => {
     //     signOut(auth);
-    //     localStorage.removeItem('accessToken');
+    //     // localStorage.removeItem('accessToken');
     // };
 
     const menuItems = <>
@@ -57,10 +57,12 @@ const Navbar = () => {
                             Profile
                         </Link>
                     </li>
+                    {/* ---- */}
                     {/* {
                         user && <li><Link to="/dashboard">Dashboard</Link></li>
                     }
                     <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li> */}
+                    {/* ----- */}
                 </ul>
 
 
