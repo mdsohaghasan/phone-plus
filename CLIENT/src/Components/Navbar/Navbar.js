@@ -42,7 +42,7 @@ const Navbar = () => {
                         {menuItems}
                     </ul>
                 </div>
-                <Link to="/" className="btn btn-ghost normal-case text-xl">Phone Plus</Link>
+                <Link to="/" className="normal-case text-4xl font-bold ml-10">Phone +Plus</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
@@ -61,15 +61,13 @@ const Navbar = () => {
                         </label>
                         <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                             <li>
-                                <Link to="/" class="justify-between">
-                                    Profile
-                                </Link>
+                                <Link to="/myAccount" class="justify-between"> MyAccount </Link>
                             </li>
 
                             {
                                 user && <li><Link to="/dashboard">Dashboard</Link></li>
                             }
-                            <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/signIn">SignIn</Link>}</li>
+                            <li>{user ? <button className="btn btn-primary text-white" onClick={logout} >Sign Out</button> : <Link to="/signIn">SignIn</Link>}</li>
 
                         </ul>
                     </div>

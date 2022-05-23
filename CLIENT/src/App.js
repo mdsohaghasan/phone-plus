@@ -23,13 +23,13 @@ function App() {
         <Route path="/" element={<Home></Home>} />
         <Route path="/home" element={<Home></Home>} />
         <Route path="/purchase" element={<Purchase></Purchase>} />
-        <Route path="review" element={<Reviews></Reviews>} />
-        <Route path="about" element={<About></About>} />
-        <Route path="blog" element={<Blogs></Blogs>} />
-        <Route path="signIn" element={<SignIn></SignIn>} />
-        <Route path="signUp" element={<SignUp></SignUp>} />
-        <Route path="dashboard" element={<Dashboard></Dashboard>} />
-        <Route path="myAccount" element={<MyAccount></MyAccount>} />
+        <Route path="/review" element={<Reviews></Reviews>} />
+        <Route path="/about" element={<About></About>} />
+        <Route path="/blog" element={<Blogs></Blogs>} />
+        <Route path="/signIn" element={<SignIn></SignIn>} />
+        <Route path="/signUp" element={<SignUp></SignUp>} />
+        <Route path="/dashboard" element={<Dashboard></Dashboard>} />
+        <Route path="/myAccount" element={<MyAccount></MyAccount>} />
         <Route path="/productDetails/:id" element={<Purchase></Purchase>}></Route>
         <Route path="/*" element={<NotFound></NotFound>} />
       </Routes>
