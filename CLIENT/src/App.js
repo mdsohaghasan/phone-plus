@@ -13,6 +13,7 @@ import SignUp from './Pages/SignUp/SignUp';
 import NotFound from './Pages/NotFound/NotFound';
 import Purchase from './Pages/Purchase/Purchase';
 import Footer from './Components/Footer/Footer';
+import RequireAuth from './Hooks/RequireAuth/RequireAuth';
 
 function App() {
   return (
@@ -20,21 +21,22 @@ function App() {
 
       <Navbar></Navbar>
       <Routes>
-        <Route path="/" element={<Home></Home>} />
-        <Route path="/home" element={<Home></Home>} />
-        <Route path="/purchase" element={<Purchase></Purchase>} />
-        <Route path="/review" element={<Reviews></Reviews>} />
-        <Route path="/about" element={<About></About>} />
-        <Route path="/blog" element={<Blogs></Blogs>} />
-        <Route path="/signIn" element={<SignIn></SignIn>} />
-        <Route path="/signUp" element={<SignUp></SignUp>} />
-        <Route path="/dashboard" element={<Dashboard></Dashboard>} />
-        <Route path="/myAccount" element={<MyAccount></MyAccount>} />
-        <Route path="/productDetails/:id" element={<Purchase></Purchase>}></Route>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/review" element={<Reviews />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/blog" element={<Blogs />} />
+        <Route path="/signIn" element={<SignIn />} />
+        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/purchase" element={<RequireAuth><Purchase /></RequireAuth>} />
+        <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
+        <Route path="/myAccount" element={<RequireAuth><MyAccount /></RequireAuth>} />
+        <Route path="/productDetails/:id" element={<Purchase />}></Route>
         <Route path="/*" element={<NotFound></NotFound>} />
       </Routes>
 
       <Footer></Footer>
+      {/* <ToastContainer /> */}
     </div>
   );
 }

@@ -1,15 +1,16 @@
 import React from 'react'
 import { useAuthState, useSendEmailVerification } from 'react-firebase-hooks/auth'
 import { Navigate, useLocation } from 'react-router-dom';
+import Loading from '../../Components/Loading/Loading';
 import auth from '../../firebase.init'
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 
 function RequireAuth({ children }) {
     const [user, loading] = useAuthState(auth);
     const location = useLocation();
-    const [sendEmailVerification, sending, error] = useSendEmailVerification(auth);
-    if (loading) {
-        return <loading></loading>
+    const [sendEmailVerification, sending] = useSendEmailVerification(auth);
+    if (loading || sending) {
+        return <Loading></Loading>
     }
 
     if (!user) {
@@ -22,12 +23,11 @@ function RequireAuth({ children }) {
             <h3>Plese Check Your Email</h3>
             <button className='btn btn-primary' onClick={async () => {
                 await sendEmailVerification();
-                toast('Sent email');
+                alert('Sent email');
             }}
             >
                 Verify email Again
             </button>
-            <ToastContainer />
         </div>
     }
     return children;

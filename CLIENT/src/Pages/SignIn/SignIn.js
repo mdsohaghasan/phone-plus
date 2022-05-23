@@ -16,9 +16,9 @@ const SignIn = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'
-    // if (user || gUser) {
-    //     navigate(from, { replace: true });
-    // }
+    if (user || gUser) {
+        navigate(from, { replace: true });
+    }
 
 
     if (loading || gLoading) {
@@ -32,7 +32,7 @@ const SignIn = () => {
 
     const onSubmit = async data => {
         await signInWithEmailAndPassword(data.email, data.password);
-        navigate(from, { replace: true });
+
     }
 
     // reset password
