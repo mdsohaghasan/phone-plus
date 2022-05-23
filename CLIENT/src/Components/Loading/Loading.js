@@ -2,7 +2,7 @@ import React from 'react'
 
 const Loading = () => {
     return (
-        <div>Loading</div>
+        <button class="btn no-animation">I don't have click animation</button>
     )
 }
 

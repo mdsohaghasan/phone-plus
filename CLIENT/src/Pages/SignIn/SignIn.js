@@ -3,8 +3,8 @@ import React from 'react'
 const SignIn = () => {
     return (
         <div class="hero min-h-screen bg-base-200">
-            <div class="hero-content flex-col lg:flex-row-reverse">
-                <div class="text-center lg:text-left">
+            <div class="hero-content flex-col lg:flex-row-reverse px-10">
+                <div class="text-center lg:text-left px-20">
                     <h1 class="text-5xl font-bold">Login now!</h1>
                     <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                 </div>
@@ -28,8 +28,14 @@ const SignIn = () => {
                         <div class="form-control mt-6">
                             <button class="btn btn-primary">Login</button>
                         </div>
+                        <div class="divider">OR</div>
+                        <div>
+                            <button class="btn btn-active btn-primary m-3">Login With Google</button>
+                            <button class="btn btn-active btn-primary ">Login With Github</button>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     )
