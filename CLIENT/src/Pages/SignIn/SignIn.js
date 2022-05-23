@@ -96,6 +96,7 @@ const SignIn = () => {
                                 <button class="btn btn-primary">Login</button>
                             </div>
                         </form>
+                        <p><small>Are You New <Link className='text-primary' to="/signUp">Please Register Account</Link></small></p>
                         <div class="divider">OR</div>
                         <button onClick={() => signInWithGoogle()} class="btn btn-active btn-primary m-3">Login With Google</button>
                     </div>
