@@ -98,13 +98,17 @@ const SignUp = () => {
                                     {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                     {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                 </label>
-                                {/* {signInError} */}
+                                {signInError}
                                 {/* <label class="label">
                                     <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
                                 </label> */}
+                                <div class="form-check my-3">
+                                    <input onClick={() => setAgree(!agrre)} type="checkbox" name='terms' id="exampleCheck1" />
+                                    <label className={`ps-2 ${agrre ? '' : `text-danger`}`} for="exampleCheck1">Accept Mobile House Terms And Conditions</label>
+                                </div>
                             </div>
                             <div class="form-control mt-6">
-                                <button class="btn btn-primary">SignUp</button>
+                                <button disabled={!agrre} class="btn btn-primary">SignUp</button>
                             </div>
                         </form>
                         <p><small>Already Have an Account <Link className='text-primary' to="/signIn">Please SignIn</Link></small></p>
