@@ -1,10 +1,11 @@
 import React from 'react'
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import { useForm } from "react-hook-form";
 
 const SignUp = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-
+    const { register, formState: { errors }, handleSubmit } = useForm();
 
     return (
         <div class="hero min-h-screen bg-base-200">
