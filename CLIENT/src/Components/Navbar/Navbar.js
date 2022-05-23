@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { signOut } from 'firebase/auth';
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import auth from '../../firebase.init';
+import { signOut } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 
 const Navbar = () => {
 
-    // const [user] = useAuthState(auth);
+    const [user] = useAuthState(auth);
 
-    // const logout = () => {
-    //     signOut(auth);
-    //     // localStorage.removeItem('accessToken');
-    // };
+    const logout = () => {
+        signOut(auth);
+        // localStorage.removeItem('accessToken');
+    };
 
     const menuItems = <>
         <li><Link to="/">Home</Link></li>
@@ -19,12 +19,17 @@ const Navbar = () => {
         <li><Link to="/review">Review</Link></li>
         <li><Link to="/about">About</Link></li>
         <li><Link to="/blog">Blog</Link></li>
-        <li><Link to="/signIn">signIn</Link></li>
-        <li><Link to="/signUp">signUp</Link></li>
-        {/* {
-            user && <li><Link to="/dashboard">Dashboard</Link></li>
+
+        {
+            user ?
+                <li class="nav-link">{user?.displayName}</li>
+                :
+                <>
+                    <li><Link to="/signIn">SignIn</Link></li>
+                    <li><Link to="/signUp">SignUp</Link></li>
+                </>
+
         }
-        <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li> */}
     </>
     return (
         <div className="navbar bg-base-100">
@@ -46,24 +51,30 @@ const Navbar = () => {
             </div>
             <div className="dropdown dropdown-end navbar-end
             ">
-                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                    <div class="w-10 rounded-full">
-                        <img src="https://api.lorem.space/image/face?hash=33791" />
+
+                {
+                    user && <div>
+                        <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                            <div class="w-10 rounded-full">
+                                <img src="https://api.lorem.space/image/face?hash=33791" />
+                            </div>
+                        </label>
+                        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                            <li>
+                                <Link to="/" class="justify-between">
+                                    Profile
+                                </Link>
+                            </li>
+
+                            {
+                                user && <li><Link to="/dashboard">Dashboard</Link></li>
+                            }
+                            <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/signIn">SignIn</Link>}</li>
+
+                        </ul>
                     </div>
-                </label>
-                <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                    <li>
-                        <Link to="/" class="justify-between">
-                            Profile
-                        </Link>
-                    </li>
-                    {/* ---- */}
-                    {/* {
-                        user && <li><Link to="/dashboard">Dashboard</Link></li>
-                    }
-                    <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li> */}
-                    {/* ----- */}
-                </ul>
+                }
+
 
 
             </div>
@@ -72,3 +83,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
