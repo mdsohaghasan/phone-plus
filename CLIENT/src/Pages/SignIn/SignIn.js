@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import React, { useState } from 'react'
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -8,21 +8,17 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const SignIn = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+    const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const [
-        signInWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useSignInWithEmailAndPassword(auth);
+    const [agrre, setAgree] = useState(false);
 
     let signInError;
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'
-    if (user) {
-        navigate(from, { replace: true });
-    }
+    // if (user || gUser) {
+    //     navigate(from, { replace: true });
+    // }
 
 
     if (loading || gLoading) {
@@ -34,9 +30,23 @@ const SignIn = () => {
     }
 
 
-    const onSubmit = data => {
-        signInWithEmailAndPassword(data.email, data.password);
+    const onSubmit = async data => {
+        await signInWithEmailAndPassword(data.email, data.password);
+        navigate(from, { replace: true });
     }
+
+    // reset password
+    // const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+    // const resetPassword = async () => {
+    //     const email = emailRef.current.value;
+    //     if (email) {
+    //         await sendPasswordResetEmail(email);
+    //         toast('Sent email');
+    //     }
+    //     else {
+    //         toast('Pleace Enter Your Currect Email Address');
+    //     }
+    // }
 
     return (
         <div class="hero min-h-screen bg-base-200">
@@ -92,8 +102,12 @@ const SignIn = () => {
                                     <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
+                            <div class="form-check my-3">
+                                <input onClick={() => setAgree(!agrre)} type="checkbox" name='terms' id="exampleCheck1" />
+                                <label className={`ps-2 ${agrre ? '' : `text-danger`}`} for="exampleCheck1">Accept Mobile House Terms And Conditions</label>
+                            </div>
                             <div class="form-control mt-6">
-                                <button class="btn btn-primary">Login</button>
+                                <button disabled={!agrre} class="btn btn-primary">Login</button>
                             </div>
                         </form>
                         <p><small>Are You New <Link className='text-primary' to="/signUp">Please Register Account</Link></small></p>
