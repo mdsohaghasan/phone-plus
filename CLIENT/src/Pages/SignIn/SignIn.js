@@ -36,15 +36,14 @@ const SignIn = () => {
     }
 
     // reset password
-    // const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
-    // const resetPassword = async () => {
-    //     const email = emailRef.current.value;
-    //     if (email) {
-    //         await sendPasswordResetEmail(email);
-    //         toast('Sent email');
+    // const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
+    // const resetPassword = async (data) => {
+    //     if (data.email) {
+    //         await sendPasswordResetEmail(data.email);
+    //         alert('Sent email');
     //     }
     //     else {
-    //         toast('Pleace Enter Your Currect Email Address');
+    //         alert('Pleace Enter Your Currect Email Address');
     //     }
     // }
 
@@ -98,13 +97,14 @@ const SignIn = () => {
                                     {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                 </label>
                                 {signInError}
-                                <label class="label">
-                                    <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
+                                <label class="label"> <a href="#"
+                                    // onClick={resetPassword}
+                                    class="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
-                            <div class="form-check my-3">
+                            <div class="form-check">
                                 <input onClick={() => setAgree(!agrre)} type="checkbox" name='terms' id="exampleCheck1" />
-                                <label className={`ps-2 ${agrre ? '' : `text-danger`}`} for="exampleCheck1">Accept Mobile House Terms And Conditions</label>
+                                <label className={`ps-2 ${agrre ? '' : `text-danger`}`} for="exampleCheck1">Accept Plus Terms</label>
                             </div>
                             <div class="form-control mt-6">
                                 <button disabled={!agrre} class="btn btn-primary">Login</button>

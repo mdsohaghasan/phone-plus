@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useForm } from "react-hook-form"
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -9,29 +9,31 @@ const SignUp = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const [agrre, setAgree] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'
     if (user || gUser) {
-        navigate(from, { replace: true });
+        console.log(user || gUser)
     }
 
     let signInError;
 
-    if (loading || gLoading) {
+    if (loading || gLoading || updating) {
         return <Loading></Loading>
     }
 
-    if (error || gError) {
-        signInError = <p className='text-red-500'><small>{error?.message || gError?.message}</small></p>
+    if (error || gError || updateError) {
+        signInError = <p className='text-red-500'><small>{error?.message || gError?.message || updateError?.message}</small></p>
     }
 
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
-        // await updateProfile({ displayName: data.name });
-
+        await updateProfile({ displayName: data.name });
+        alert('updeted name');
+        navigate(from, { replace: true });
     }
 
     return (
@@ -102,9 +104,9 @@ const SignUp = () => {
                                 {/* <label class="label">
                                     <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
                                 </label> */}
-                                <div class="form-check my-3">
+                                <div class="form-check ">
                                     <input onClick={() => setAgree(!agrre)} type="checkbox" name='terms' id="exampleCheck1" />
-                                    <label className={`ps-2 ${agrre ? '' : `text-danger`}`} for="exampleCheck1">Accept Mobile House Terms And Conditions</label>
+                                    <label className={`ps-2 ${agrre ? '' : `text-danger`}`} for="exampleCheck1">Accept Plus Terms</label>
                                 </div>
                             </div>
                             <div class="form-control mt-6">
