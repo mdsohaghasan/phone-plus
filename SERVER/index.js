@@ -22,7 +22,7 @@ async function run() {
         const usersCollection = client.db('phoneplus').collection('users');
         const productsCollection = client.db('phoneplus').collection('products');
         const reviewsCollection = client.db('phoneplus').collection('reviews');
-        const bookingCollection = client.db('phoneplus').collection('booking');
+        const PurchaseInfoCollection = client.db('phoneplus').collection('PurchaseInfo');
         console.log('Database Connect Hoise')
 
         //VERIFY JWT
@@ -61,9 +61,9 @@ async function run() {
             res.send({ result, token });
         });
 
-        app.get('/booking', async (req, res) => {
-            const booking = req.body
-            const result = await bookingCollection.insertOne(booking)
+        app.post('/PurchaseInfo', async (req, res) => {
+            const PurchaseInfo = req.body
+            const result = await PurchaseInfoCollection.insertOne(PurchaseInfo)
             res.send(result)
             // const patient = req.query.patient;
             // const decodedEmail = req.decoded.email;

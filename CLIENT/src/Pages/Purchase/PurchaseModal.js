@@ -8,9 +8,7 @@ const PurchaseModal = ({ items, setItems }) => {
 
     const handleBooking = event => {
         event.preventDefault();
-        // const slot = event.target.slot.value;
-
-        const booking = {
+        const PurchaseInfo = {
             productId: items._id,
             product: items.name,
             customerEmail: user.email,
@@ -18,46 +16,25 @@ const PurchaseModal = ({ items, setItems }) => {
             phone: event.target.phone.value,
         }
 
-        fetch('http://localhost:5000/booking', {
+        fetch('http://localhost:5000/PurchaseInfo', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(booking)
+            body: JSON.stringify(PurchaseInfo)
         })
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    toast(`Appointment is set, ${data.booking?.phone} at${data.booking?.product}`)
+                    toast(`Appointment is set,${data.PurchaseInfo?.product} at ${data.PurchaseInfo?.customerEmail} `)
                 }
                 else {
-                    toast.error(`Already have and appointment on ${data.booking?.product} at ${data.booking?.phone}`)
+                    toast.error(`Already have and appointment on ${data.PurchaseInfo?.product} at ${data.PurchaseInfo?.customerEmail}`)
                 }
                 setItems(null);
-
+                console.log('booking for you ', data)
                 // refetch();
             });
-        // console.log(PurchaseInfo)
-
-        // fetch('http://localhost:5000/PurchaseInfo', {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(PurchaseInfo)
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         if (data.success) {
-        //             alert(`Appointment is set,${data.PurchaseInfo?.product} at ${data.PurchaseInfo?.customerEmail} `)
-        //         }
-        //         else {
-        //             alert.error(`Already have and appointment on ${data.PurchaseInfo?.product} at ${data.PurchaseInfo?.customerEmail}`)
-        //         }
-        //         setItems(null);
-        //         console.log('booking for you ', data)
-        //         // refetch();
-        //     });
 
     }
     return (
