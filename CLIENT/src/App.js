@@ -6,7 +6,6 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import Blogs from './Pages/Blogs/Blogs';
 import About from './Pages/About/About';
 import { Route, Routes } from 'react-router-dom';
-// import MyAccount from './Pages/MyAccount/MyAccount';
 import SignIn from './Pages/SignIn/SignIn';
 import SignUp from './Pages/SignUp/SignUp';
 import NotFound from './Pages/NotFound/NotFound';
@@ -47,7 +46,7 @@ function App() {
           <Route path="manageOrders" element={<RequireAdmin><ManageOrders /></RequireAdmin>}></Route>
         </Route>
 
-        <Route path="/myAccount" element={<RequireAuth><MyAccount /></RequireAuth>} />
+
         <Route path="/productDetails/:id" element={<Purchase />}></Route>
         <Route path="/*" element={<NotFound></NotFound>} />
       </Routes>
