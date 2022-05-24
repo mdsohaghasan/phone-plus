@@ -8,33 +8,29 @@ const MyOrders = () => {
 
     const [orderItem, setOrderItem] = useState([]);
     const [user] = useAuthState(auth);
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/PurchaseInfo?customerEmail=${user.email}`)
-                .then(res => res.json())
-                .then(data => setOrderItem(data));
+            fetch(`http://localhost:5000/PurchaseInfo?customerEmail=${user.email}`, {
+                method: 'GET',
+                headers: {
+                    'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
+                .then(res => {
+                    console.log('res', res);
+                    if (res.status === 401 || res.status === 403) {
+                        signOut(auth);
+                        localStorage.removeItem('accessToken');
+                        navigate('/');
+                    }
+                    return res.json()
+                })
+                .then(data => {
 
-            // , {
-            //     method: 'GET',
-            //     headers: {
-            //         'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            //     }
-            // })
-            // .then(res => {
-            //     console.log('res', res);
-            //     if (res.status === 401 || res.status === 403) {
-            //         signOut(auth);
-            //         localStorage.removeItem('accessToken');
-            //         navigate('/');
-            //     }
-            //     return res.json()
-            // })
-            // .then(data => {
-
-            //     setOrderItem(data);
-            // });
+                    setOrderItem(data);
+                });
         }
     }, [user])
 

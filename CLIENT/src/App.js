@@ -44,7 +44,11 @@ function App() {
           <Route path="payment/:id" element={<Payment />}></Route>
           {/* ADMIN ROUTE  */}
           <Route path="addProduct" element={<RequireAdmin><AddProduct /></RequireAdmin>}></Route>
-          <Route path="manageusers" element={<RequireAdmin><ManageUsers /></RequireAdmin>}></Route>
+          <Route path="manageusers" element={
+            // <RequireAdmin>
+            <ManageUsers />
+            // </RequireAdmin>
+          }></Route>
           <Route path="manageOrders" element={<RequireAdmin><ManageOrders /></RequireAdmin>}></Route>
         </Route>
 

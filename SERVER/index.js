@@ -15,6 +15,23 @@ app.use(express.json())
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pajtj.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
+// verify jwt
+//VERIFY JWT
+function verifyJWT(req, res, next) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).send({ message: 'UnAuthorized access' });
+    }
+    const token = authHeader.split(' ')[1];
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function (err, decoded) {
+        if (err) {
+            return res.status(403).send({ message: 'Forbidden access' })
+        }
+        req.decoded = decoded;
+        next();
+    });
+}
+
 // DATABASE CONNECTION
 async function run() {
     try {
@@ -25,29 +42,23 @@ async function run() {
         const PurchaseInfoCollection = client.db('phoneplus').collection('PurchaseInfo');
         console.log('Database Connect Hoise')
 
-        //VERIFY JWT
-        // function verifyJWT(req, res, next) {
-        //     const authHeader = req.headers.authorization
-        //     if (!authHeader) {
-        //         if (!authHeader) {
-        //             console.log('test ', authHeader)
-        //             return res.status(401).send({ messege: 'unauthorized accsess' })
-        //         }
-        //         const accsessToken = authHeader.split(' ')[1];
-        //         jwt.verify(accsessToken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-        //             console.log('test tokemn', accsessToken)
-        //             if (err) {
-        //                 return res.status(403).send({ messege: 'FORBIDDEN accsess' });
-        //             }
-        //             req.decoded = decoded
-        //         })
-
-        //         next()
-        //     }
-        // }
-
-
         // working -----------------------
+
+        // PRODUCT ITEM LOAD ROUTES
+        app.get('/products', async (req, res) => {
+            const query = {};
+            const cursor = productsCollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items)
+        });
+
+        // USERS ROUTES
+
+        app.get('/manageusers', verifyJWT, async (req, res) => {
+            const users = await usersCollection.find().toArray();
+            res.send(users);
+        });
+
         app.put('/users/:email', async (req, res) => {
             const email = req.params.email;
             const user = req.body;
@@ -61,6 +72,24 @@ async function run() {
             res.send({ result, token });
         });
 
+        app.get('/admin/:email', async (req, res) => {
+            const email = req.params.email;
+            const users = await usersCollection.findOne({ email: email });
+            const isAdmin = users.role === 'admin';
+            res.send({ admin: isAdmin })
+        })
+
+        app.put('/manageusers/admin/:email', verifyJWT, async (req, res) => {
+            const email = req.params.email;
+            const filter = { email: email };
+            const updateDoc = {
+                $set: { role: 'admin' },
+            };
+            const result = await usersCollection.updateOne(filter, updateDoc);
+            res.send(result);
+        })
+
+        // ORDERS ROUTES -------------------
         app.post('/PurchaseInfo', async (req, res) => {
             const PurchaseInfo = req.body
             // const exists = await bookingCollection.findOne(query);
@@ -71,17 +100,19 @@ async function run() {
             res.send(result);
         });
 
-        app.get('/PurchaseInfo', async (req, res) => {
+        app.get('/PurchaseInfo', verifyJWT, async (req, res) => {
             const customerEmail = req.query.customerEmail;
-            // const decodedEmail = req.decoded.email;
-            // if (patient === decodedEmail) {
-            const query = { customerEmail: customerEmail };
-            const PurchaseInfo = await PurchaseInfoCollection.find(query).toArray();
-            return res.send(PurchaseInfo);
-            // }
-            // else {
-            // return res.status(403).send({ message: 'forbidden access' });
-            // }
+            // const authorization = req.headers.authorization;
+            // console.log('my test', authorization)
+            const decodedEmail = req.decoded.email;
+            if (customerEmail === decodedEmail) {
+                const query = { customerEmail: customerEmail };
+                const PurchaseInfo = await PurchaseInfoCollection.find(query).toArray();
+                return res.send(PurchaseInfo);
+            }
+            else {
+                return res.status(403).send({ message: 'forbidden access' });
+            }
         });
 
 
@@ -153,14 +184,6 @@ async function run() {
         // });
 
         // //=========== START INVENTORY ITEM ENDPOINT ============
-
-        // PRODUCT ITEM ALL LOAD 
-        app.get('/products', async (req, res) => {
-            const query = {};
-            const cursor = productsCollection.find(query);
-            const items = await cursor.toArray();
-            res.send(items)
-        });
 
         // // PRODUCT ITEM ALL LOAD 
         // app.get('/Items', async (req, res) => {
