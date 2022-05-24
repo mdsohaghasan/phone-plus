@@ -4,6 +4,7 @@ import auth from '../../firebase.init';
 import { useForm } from "react-hook-form"
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Loading from '../../Components/Loading/Loading';
+import useToken from '../../Hooks/useToken/useToken';
 
 const SignUp = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -13,13 +14,16 @@ const SignUp = () => {
     // const [sendEmailVerification, sending] = useSendEmailVerification(auth);
     const [agrre, setAgree] = useState(false);
 
+    const [token] = useToken(user || gUser);
+
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'
     if (user || gUser) {
         navigate(from, { replace: true });
-        console.log(user || gUser)
+        // console.log(user || gUser)
     }
+
 
     let signInError;
 
@@ -38,6 +42,7 @@ const SignUp = () => {
         alert('updeted name');
         navigate(from, { replace: true });
     }
+
 
     return (
         <div class="hero min-h-screen bg-base-200">
