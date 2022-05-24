@@ -17,19 +17,19 @@ function RequireAuth({ children }) {
         return <Navigate to="/Signin" state={{ from: location }} replace />;
     }
 
-    if (!user.emailVerified) {
-        return <div>
-            <h1 className='text-danger'>Your Email Is Not Verified</h1>
-            <h3>Plese Check Your Email</h3>
-            <button className='btn btn-primary' onClick={async () => {
-                await sendEmailVerification();
-                alert('Sent email');
-            }}
-            >
-                Verify email Again
-            </button>
-        </div>
-    }
+    // if (!user.emailVerified) {
+    //     return <div>
+    //         <h1 className='text-danger'>Your Email Is Not Verified</h1>
+    //         <h3>Plese Check Your Email</h3>
+    //         <button className='btn btn-primary' onClick={async () => {
+    //             await sendEmailVerification();
+    //             alert('Sent email');
+    //         }}
+    //         >
+    //             Verify email Again
+    //         </button>
+    //     </div>
+    // }
     return children;
 }
 

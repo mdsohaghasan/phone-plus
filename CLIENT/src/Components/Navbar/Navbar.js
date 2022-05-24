@@ -61,7 +61,7 @@ const Navbar = () => {
                         </label>
                         <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                             <li>
-                                <Link to="/myAccount" class="justify-between"> MyAccount </Link>
+                                <Link to="dashboard/myAccount" class="justify-between"> MyAccount </Link>
                             </li>
 
                             {
