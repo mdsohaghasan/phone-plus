@@ -22,6 +22,7 @@ async function run() {
         const usersCollection = client.db('phoneplus').collection('users');
         const productsCollection = client.db('phoneplus').collection('products');
         const reviewsCollection = client.db('phoneplus').collection('reviews');
+        const bookingCollection = client.db('phoneplus').collection('booking');
         console.log('Database Connect Hoise')
 
         //VERIFY JWT
@@ -58,6 +59,22 @@ async function run() {
             const result = await usersCollection.updateOne(filter, updateDoc, options);
             const token = jwt.sign({ email: email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5d' })
             res.send({ result, token });
+        });
+
+        app.get('/booking', async (req, res) => {
+            const booking = req.body
+            const result = await bookingCollection.insertOne(booking)
+            res.send(result)
+            // const patient = req.query.patient;
+            // const decodedEmail = req.decoded.email;
+            // if (patient === decodedEmail) {
+            //     const query = { patient: patient };
+            //     const bookings = await bookingCollection.find(query).toArray();
+            //     return res.send(bookings);
+            // }
+            // else {
+            //     return res.status(403).send({ message: 'forbidden access' });
+            // }
         });
         // working --------------------
         // // AUTH USER LOGIN 

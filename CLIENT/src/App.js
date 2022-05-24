@@ -1,4 +1,6 @@
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './Components/Navbar/Navbar';
 import Home from './Pages/Home/Home';
 import Reviews from './Pages/Reviews/Reviews';
@@ -52,7 +54,7 @@ function App() {
       </Routes>
 
       <Footer></Footer>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
     </div>
   );
 }

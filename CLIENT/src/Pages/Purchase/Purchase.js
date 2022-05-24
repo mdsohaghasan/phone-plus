@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+    // useEffect,
+    useState
+} from 'react'
 // import Products from '../Home/Products/Products'
 // import { useParams } from 'react-router-dom';
 import PurchaseCard from './PurchaseCard';
@@ -7,7 +10,6 @@ import PurchaseModal from './PurchaseModal';
 
 
 const Purchase = () => {
-
     const [items, setItems] = useState(null);
 
     // const { id } = useParams();
@@ -18,10 +20,10 @@ const Purchase = () => {
     //     fetch(url)
     //         .then((res) => res.json())
     //         .then((data) => setItemes(data));
-
     // }, []);
 
-    const ProductsItems = [
+
+    const PurchaseItems = [
         {
             _id: 1,
             name: 'Fluoride Treatment',
@@ -46,24 +48,24 @@ const Purchase = () => {
         <div>
 
             <div className=''>
-                <h3 className='text-primary text-5xl my-10'>Our Products</h3>
+                <h3 className='text-primary text-5xl my-10'>Our PurchaseItems</h3>
             </div>
             <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 m-20'>
 
                 {
-                    ProductsItems.map(product => <PurchaseCard
+                    PurchaseItems.map(product => <PurchaseCard
                         key={product._id}
                         product={product}
                         setItems={setItems}
                     ></PurchaseCard>)
-                }
 
+                }
             </div>
-            {items && <PurchaseModal Items={items}></PurchaseModal>}
+            {items && <PurchaseModal items={items} setItems={setItems}></PurchaseModal>}
 
         </div>
 
-        // <Products></Products>
+
     )
 }
 

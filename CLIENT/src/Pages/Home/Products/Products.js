@@ -5,7 +5,7 @@ const Products = () => {
     const ProductsItems = [
         {
             _id: 1,
-            name: 'Fluoride Treatment',
+            name: 'gfhfgthfg',
             description: 'Now you can use React Router anywhere in your app! For a simple example, open'
             // img: fluoride
         },
