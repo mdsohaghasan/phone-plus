@@ -14,6 +14,7 @@ const PurchaseModal = ({ items, setItems }) => {
             customerEmail: user.email,
             customerName: user.displayName,
             phone: event.target.phone.value,
+            ShortDes: items.description
         }
 
         fetch('http://localhost:5000/PurchaseInfo', {
@@ -25,12 +26,12 @@ const PurchaseModal = ({ items, setItems }) => {
         })
             .then(res => res.json())
             .then(data => {
-                if (data.success) {
-                    toast(`Appointment is set,${data.PurchaseInfo?.product} at ${data.PurchaseInfo?.customerEmail} `)
-                }
-                else {
-                    toast.error(`Already have and appointment on ${data.PurchaseInfo?.product} at ${data.PurchaseInfo?.customerEmail}`)
-                }
+                // if (data.success) {
+                //     toast(`Appointment is set,${data.PurchaseInfo?.product} at ${data.PurchaseInfo?.customerEmail} `)
+                // }
+                // else {
+                //     toast.error(`Already have and appointment on ${data.PurchaseInfo?.product} at ${data.PurchaseInfo?.customerEmail}`)
+                // }
                 setItems(null);
                 console.log('booking for you ', data)
                 // refetch();

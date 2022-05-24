@@ -63,19 +63,28 @@ async function run() {
 
         app.post('/PurchaseInfo', async (req, res) => {
             const PurchaseInfo = req.body
+            // const exists = await bookingCollection.findOne(query);
+            // if (exists) {
+            //     return res.send({ success: false, booking: exists })
+            // }
             const result = await PurchaseInfoCollection.insertOne(PurchaseInfo)
-            res.send(result)
-            // const patient = req.query.patient;
+            res.send(result);
+        });
+
+        app.get('/PurchaseInfo', async (req, res) => {
+            const customerEmail = req.query.customerEmail;
             // const decodedEmail = req.decoded.email;
             // if (patient === decodedEmail) {
-            //     const query = { patient: patient };
-            //     const bookings = await bookingCollection.find(query).toArray();
-            //     return res.send(bookings);
+            const query = { customerEmail: customerEmail };
+            const PurchaseInfo = await PurchaseInfoCollection.find(query).toArray();
+            return res.send(PurchaseInfo);
             // }
             // else {
-            //     return res.status(403).send({ message: 'forbidden access' });
+            // return res.status(403).send({ message: 'forbidden access' });
             // }
         });
+
+
         // working --------------------
         // // AUTH USER LOGIN 
         // app.post('/Signin', async (req, res) => {
