@@ -36,7 +36,7 @@ const MyOrders = () => {
 
     return (
         <div>
-            <h2>My Appointments: {orderItem.length}</h2>
+            <h2>My Orders: {orderItem.length}</h2>
             <div class="overflow-x-auto">
                 <table class="table w-full">
                     <thead>
@@ -51,18 +51,14 @@ const MyOrders = () => {
                     </thead>
                     <tbody>
                         {
-                            orderItem.map((a, index) => <tr key={a._id}>
+                            orderItem.map((orderInfo, index) => <tr key={orderInfo._id}>
                                 <th>{index + 1}</th>
-                                <td>{a.product}</td>
-                                <td>{a.Price}</td>
-                                <td>{a.customerName}</td>
-                                <td>{a.phone}</td>
+                                <td>{orderInfo.product}</td>
+                                <td>{orderInfo.Price}</td>
+                                <td>{orderInfo.customerName}</td>
+                                <td>{orderInfo.phone}</td>
                                 <td>
-                                    {(a.Price && !a.paid) && <Link to={`/dashboard/payment/${a._id}`}><button className='btn btn-xs btn-success'>pay</button></Link>}
-                                    {/* {(a.price && a.paid) && <div>
-                                        <p><span className='text-success'>Paid</span></p>
-                                        <p>Transaction id: <span className='text-success'>{a.transactionId}</span></p>
-                                    </div>} */}
+                                    {(orderInfo.Price && !orderInfo.paid) && <Link to={`/dashboard/payment/${orderInfo._id}`}><button className='btn btn-xs btn-success'>pay</button></Link>}
                                 </td>
                             </tr>)
                         }

@@ -7,7 +7,6 @@ const CheckoutForm = ({ Purchase }) => {
     const [cardError, setCardError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
     const { _id, Price, customerName, customerEmail } = Purchase;
-    // const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState('');
     const [transactionId, setTransactionId] = useState('');
 
@@ -48,10 +47,7 @@ const CheckoutForm = ({ Purchase }) => {
             card
         });
 
-
         setCardError(error?.message || '')
-        // setSuccess('');--
-        // setProcessing(true);----
 
         // // confirm card payment
         const { paymentIntent, error: paymentError } = await stripe.confirmCardPayment(
@@ -70,7 +66,6 @@ const CheckoutForm = ({ Purchase }) => {
         if (paymentError) {
             setCardError(paymentError?.message);
             setSuccess('');
-            // setProcessing(false);-----
         }
         else {
             setSuccess('Your Payment Is Successfully Complete')
@@ -91,8 +86,6 @@ const CheckoutForm = ({ Purchase }) => {
                 body: JSON.stringify(payment)
             }).then(res => res.json())
                 .then(data => {
-                    // setProcessing(false);-----
-                    console.log(data);
                 })
 
         }
@@ -116,7 +109,7 @@ const CheckoutForm = ({ Purchase }) => {
                     },
                 }}
                 />
-                <button className='btn btn-success btn-sm mt-4' type="submit" disabled={!stripe || !clientSecret}> Pay </button>
+                <button className='btn btn-success btn-sm mt-4' type="submit" > Pay </button>
             </form>
             {
                 cardError && <p className='text-red-500'>{cardError}</p>
