@@ -43,7 +43,11 @@ function App() {
           <Route path="myReviews" element={<MyReviews></MyReviews>}></Route>
           <Route path="payment/:id" element={<Payment />}></Route>
           {/* ADMIN ROUTE  */}
-          <Route path="addProduct" element={<RequireAdmin><AddProduct /></RequireAdmin>}></Route>
+          <Route path="addProduct" element={
+            // <RequireAdmin>
+            <AddProduct />
+            // </RequireAdmin>
+          }></Route>
           <Route path="manageusers" element={
             // <RequireAdmin>
             <ManageUsers />

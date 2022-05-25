@@ -48,8 +48,15 @@ async function run() {
         app.get('/products', async (req, res) => {
             const query = {};
             const cursor = productsCollection.find(query);
+            // .project({ name: 1 });
             const items = await cursor.toArray();
             res.send(items)
+        });
+
+        app.post('/products', verifyJWT, async (req, res) => {
+            const products = req.body;
+            const result = await productsCollection.insertOne(products);
+            res.send(result);
         });
 
         // USERS ROUTES
