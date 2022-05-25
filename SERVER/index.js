@@ -4,6 +4,7 @@ const app = express()
 var cors = require('cors')
 require('dotenv').config()
 const port = process.env.PORT || 5000;
+const stripePayment = require('stripe')(process.env.STRIPE_PAYMENT_SECRET_KEY);
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 app.use(cors())
@@ -15,7 +16,7 @@ app.use(express.json())
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pajtj.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-// verify jwt
+
 //VERIFY JWT
 function verifyJWT(req, res, next) {
     const authHeader = req.headers.authorization;
@@ -54,6 +55,19 @@ async function run() {
                 res.status(403).send({ message: 'forbidden' });
             }
         }
+
+        // STRIPE PAYMENT API
+        app.post('/create-payment-intent', verifyJWT, async (req, res) => {
+            const { Price } = req.body;
+            // const price = service.price;
+            const amount = Price * 100;
+            const paymentIntent = await stripePayment.paymentIntents.create({
+                amount: amount,
+                currency: 'usd',
+                payment_method_types: ['card']
+            });
+            res.send({ clientSecret: paymentIntent.client_secret })
+        });
 
         // PRODUCT ITEM LOAD ROUTES
         app.get('/products', verifyJWT, async (req, res) => {

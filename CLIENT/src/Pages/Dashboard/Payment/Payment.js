@@ -1,12 +1,12 @@
 import React from 'react';
-// import { Elements } from '@stripe/react-stripe-js';
-// import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import Loading from '../../../Components/Loading/Loading';
-// import CheckoutForm from './CheckoutForm';
+import CheckoutForm from './CheckoutForm';
 
-// const stripePromise = loadStripe('pk_test_51KzgdMJVa6zVY99CaGts94G8qqJirQWPMAET7VBqrec0wWSxhuuRtgQNPA3SuwzjQKOv6QWwjgMWEfZ83N1qLNUU00IX1ciL6e');
+const stripePromise = loadStripe('pk_test_51L3QGsFtqAeyznvfxltqzpAfrr81ojHsyCjYcMpL4xv2aSoo5NF26zOUynaAhDUfEYlRYYSTn97pv769TtYS6tCD001IW1DxLF');
 
 const Payment = () => {
     const { id } = useParams();
@@ -36,9 +36,9 @@ const Payment = () => {
             </div>
             <div class="card flex-shrink-0 w-50 max-w-md shadow-2xl bg-base-100">
                 <div class="card-body">
-                    {/* <Elements stripe={stripePromise}>
-                        <CheckoutForm appointment={appointment} />
-                    </Elements> */}
+                    <Elements stripe={stripePromise}>
+                        <CheckoutForm Purchase={Purchase} />
+                    </Elements>
                 </div>
             </div>
         </div>
