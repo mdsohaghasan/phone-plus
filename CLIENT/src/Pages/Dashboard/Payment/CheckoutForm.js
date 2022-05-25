@@ -6,10 +6,10 @@ const CheckoutForm = ({ Purchase }) => {
     const elements = useElements();
     const [cardError, setCardError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
-    const { _id, Price, product, customerName, customerEmail } = Purchase;
+    const { _id, Price, customerName, customerEmail } = Purchase;
     // const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState('');
-    // const [transactionId, setTransactionId] = useState('');
+    const [transactionId, setTransactionId] = useState('');
 
     useEffect(() => {
         fetch('http://localhost:5000/create-payment-intent', {
@@ -50,8 +50,8 @@ const CheckoutForm = ({ Purchase }) => {
 
 
         setCardError(error?.message || '')
-        // setSuccess('');
-        // setProcessing(true);
+        // setSuccess('');--
+        // setProcessing(true);----
 
         // // confirm card payment
         const { paymentIntent, error: paymentError } = await stripe.confirmCardPayment(
@@ -70,31 +70,30 @@ const CheckoutForm = ({ Purchase }) => {
         if (paymentError) {
             setCardError(paymentError?.message);
             setSuccess('');
-            // setProcessing(false);
+            // setProcessing(false);-----
         }
         else {
-            setCardError('');
-            // setTransactionId(paymentIntent.id);
             setSuccess('Your Payment Is Successfully Complete')
-            console.log(paymentIntent);
+            setCardError('');
+            setTransactionId(paymentIntent.id);
 
-            // //store payment on database
-            // const payment = {
-            //     appointment: _id,
-            //     transactionId: paymentIntent.id
-            // }
-            // fetch(`https://secret-dusk-46242.herokuapp.com/booking/${_id}`, {
-            //     method: 'PATCH',
-            //     headers: {
-            //         'content-type': 'application/json',
-            //         'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            //     },
-            //     body: JSON.stringify(payment)
-            // }).then(res=>res.json())
-            // .then(data => {
-            //     setProcessing(false);
-            //     console.log(data);
-            // })
+
+            const payment = {
+                Purchase: _id,
+                transactionId: paymentIntent.id
+            }
+            fetch(`http://localhost:5000/PurchaseInfo/${_id}`, {
+                method: 'PATCH',
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: JSON.stringify(payment)
+            }).then(res => res.json())
+                .then(data => {
+                    // setProcessing(false);-----
+                    console.log(data);
+                })
 
         }
     }
@@ -125,7 +124,7 @@ const CheckoutForm = ({ Purchase }) => {
             {
                 success && <div className='text-green-500'>
                     <p>{success}  </p>
-                    {/* <p>Your transaction Id: <span className="text-orange-500 font-bold">{transactionId}</span> </p> */}
+                    <p>Your transaction Id: <span className="text-orange-500 font-bold">{transactionId}</span> </p>
                 </div>
             }
         </div>

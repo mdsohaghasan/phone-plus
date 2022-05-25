@@ -41,6 +41,7 @@ async function run() {
         const productsCollection = client.db('phoneplus').collection('products');
         const reviewsCollection = client.db('phoneplus').collection('reviews');
         const PurchaseInfoCollection = client.db('phoneplus').collection('PurchaseInfo');
+        const paymentCollection = client.db('phoneplus').collection('payments');
         console.log('Database Connect Hoise')
 
         // working -----------------------
@@ -161,6 +162,21 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const PurchaseInfo = await PurchaseInfoCollection.findOne(query);
             res.send(PurchaseInfo);
+        })
+
+        app.patch('/PurchaseInfo/:id', verifyJWT, async (req, res) => {
+            const id = req.params.id;
+            const payment = req.body;
+            const filter = { _id: ObjectId(id) };
+            const updatedDoc = {
+                $set: {
+                    paid: true,
+                    transactionId: payment.transactionId
+                }
+            }
+            const updatedPurchase = await PurchaseInfoCollection.updateOne(filter, updatedDoc);
+            const result = await paymentCollection.insertOne(payment);
+            res.send(updatedPurchase);
         })
 
 
