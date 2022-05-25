@@ -6,7 +6,8 @@ const PurchaseCard = ({ product, setItems }) => {
             <figure><img src="https://api.lorem.space/image/shoes?w=400&h=225" alt="Shoes" /></figure>
             <div class="card-body">
                 <h2 class="card-title">{product.name}</h2>
-                <p>{product.description}</p>
+                <h2 class="card-title">Price : {product.price}</h2>
+                <p>{product.shortDesc}</p>
                 <div class="card-actions justify-end">
                     <label onClick={() => setItems(product)} for="PurchaseModal" class="btn modal-button">open modal</label>
                 </div>

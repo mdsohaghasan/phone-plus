@@ -44,8 +44,19 @@ async function run() {
 
         // working -----------------------
 
+        const verifyAdmin = async (req, res, next) => {
+            const requester = req.decoded.email;
+            const requesterAccount = await userCollection.findOne({ email: requester });
+            if (requesterAccount.role === 'admin') {
+                next();
+            }
+            else {
+                res.status(403).send({ message: 'forbidden' });
+            }
+        }
+
         // PRODUCT ITEM LOAD ROUTES
-        app.get('/products', async (req, res) => {
+        app.get('/products', verifyJWT, async (req, res) => {
             const query = {};
             const cursor = productsCollection.find(query);
             // .project({ name: 1 });
@@ -56,6 +67,14 @@ async function run() {
         app.post('/products', verifyJWT, async (req, res) => {
             const products = req.body;
             const result = await productsCollection.insertOne(products);
+            res.send(result);
+        });
+
+        // PRODUCT ITEM SINGLE DELETE
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await productsCollection.deleteOne(query);
             res.send(result);
         });
 
@@ -86,7 +105,7 @@ async function run() {
             res.send({ admin: isAdmin })
         })
 
-        app.put('/manageusers/admin/:email', verifyJWT, async (req, res) => {
+        app.put('/manageusers/admin/:email', verifyJWT, verifyAdmin, async (req, res) => {
             const email = req.params.email;
             const filter = { email: email };
             const updateDoc = {
@@ -121,6 +140,14 @@ async function run() {
                 return res.status(403).send({ message: 'forbidden access' });
             }
         });
+
+        // LOAD SINGLE PurchaseInfo ON PAYMENT PAGE
+        app.get('/PurchaseInfo/:id', verifyJWT, async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const PurchaseInfo = await PurchaseInfoCollection.findOne(query);
+            res.send(PurchaseInfo);
+        })
 
 
         // working --------------------

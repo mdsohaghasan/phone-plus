@@ -11,10 +11,11 @@ const PurchaseModal = ({ items, setItems }) => {
         const PurchaseInfo = {
             productId: items._id,
             product: items.name,
-            customerEmail: user.email,
+            Price: items.price,
             customerName: user.displayName,
+            customerEmail: user.email,
             phone: event.target.phone.value,
-            ShortDes: items.description
+            ShortDes: items.shortDesc
         }
 
         fetch('http://localhost:5000/PurchaseInfo', {
@@ -44,7 +45,8 @@ const PurchaseModal = ({ items, setItems }) => {
             <div class="modal modal-bottom sm:modal-middle">
                 <div class="modal-box">
                     <h3 class="font-bold text-lg">Your Product is {items.name} </h3>
-                    <p class="py-4">{items.description}</p>
+                    <h3 class="font-bold text-lg">Your Product is {items.price} </h3>
+                    <p class="py-4">{items.shortDesc}</p>
                     <form onSubmit={handleBooking} className='grid grid-cols-1 gap-3 justify-items-center mt-2'>
                         <input type="text" name="name" disabled value={user?.displayName || ''} className="input input-bordered w-full max-w-xs" />
                         <input type="email" name="email" disabled value={user?.email || ''} className="input input-bordered w-full max-w-xs" />

@@ -27,19 +27,22 @@ const Purchase = () => {
         {
             _id: 1,
             name: 'Fluoride Treatment',
-            description: 'Now you can use React Router anywhere in your app! For a simple example, open'
+            price: 100,
+            shortDesc: 'Now you can use React Router anywhere in your app! For a simple example, open'
             // img: fluoride
         },
         {
             _id: 2,
             name: 'Cavity Filling',
-            description: 'Now you can use React Router anywhere in your app! For a simple example, open'
+            price: 200,
+            shortDesc: 'Now you can use React Router anywhere in your app! For a simple example, open'
             // img: cavity
         },
         {
             _id: 3,
             name: 'Teeth Whitening',
-            description: 'Now you can use React Router anywhere in your app! For a simple example, open'
+            price: 300,
+            shortDesc: 'Now you can use React Router anywhere in your app! For a simple example, open'
             // img: whitening
         }
     ];

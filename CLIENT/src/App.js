@@ -19,6 +19,7 @@ import MyReviews from './Pages/Dashboard/MyReviews/MyReviews';
 import MyAccount from './Pages/Dashboard/MyAccount/MyAccount';
 import Payment from './Pages/Dashboard/Payment/Payment';
 import AddProduct from './Pages/Dashboard/AddProduct/AddProduct';
+import ManageProducts from './Pages/Dashboard/ManageProducts/ManageProducts';
 import ManageUsers from './Pages/Dashboard/ManageUsers/ManageUsers';
 import ManageOrders from './Pages/Dashboard/ManageOrders/ManageOrders';
 import RequireAdmin from './Hooks/RequireAdmin/RequireAdmin.JS';
@@ -46,7 +47,12 @@ function App() {
           <Route path="addProduct" element={
             // <RequireAdmin>
             <AddProduct />
-            // </RequireAdmin>
+            // </RequireAdmin> 
+          }></Route>
+          <Route path="manageProducts" element={
+            // <RequireAdmin>
+            <ManageProducts />
+            // </RequireAdmin> 
           }></Route>
           <Route path="manageusers" element={
             // <RequireAdmin>
