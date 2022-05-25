@@ -57,7 +57,9 @@ async function run() {
             }
         }
 
-        // USERS ROUTES--
+        //--------------//
+        // USERS ROUTES //
+        //--------------//
 
         // LOAD USER ON MANAGEUSER PAGE 
         app.get('/manageusers', verifyJWT, async (req, res) => {
@@ -98,7 +100,9 @@ async function run() {
             res.send(result);
         })
 
-        // PRODUCT GET , POST , DELETE ENDPOINT-----
+        //------------------------------------//
+        // PRODUCT GET , POST , DELETE ENDPOINT
+        //------------------------------------//
 
         // PRODUCT ITEM LOAD ENDPOINT
         app.get('/products', verifyJWT, async (req, res) => {
@@ -123,7 +127,26 @@ async function run() {
             const result = await productsCollection.deleteOne(query);
             res.send(result);
         });
-        // ORDERS ENDPOINTS -------------------
+
+        //----------------//
+        // ORDERS ENDPOINTS
+        //----------------//
+
+        // LOAD ALL ORDER ON MANAGEORDER PAGE FOR ADMIN
+        app.get('/PurchaseInfo', verifyJWT, async (req, res) => {
+            const query = {};
+            const cursor = PurchaseInfoCollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items)
+        });
+
+        // SPECIPIC ORDER DELETE FROM MANAGE ORDER PAGE BY ADMIN
+        app.delete('/PurchaseInfo/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await PurchaseInfoCollection.deleteOne(query);
+            res.send(result);
+        });
 
         // LOAD ORDER PRODUCT ON MY ORDER PAGE 
         app.get('/PurchaseInfo', verifyJWT, async (req, res) => {
@@ -151,6 +174,10 @@ async function run() {
             const result = await PurchaseInfoCollection.insertOne(PurchaseInfo)
             res.send(result);
         });
+
+        //----------------//
+        // PAYMENT ENDPOINT 
+        //----------------//
 
         // LOAD SINGLE PurchaseInfo ON PAYMENT PAGE
         app.get('/PurchaseInfo/:id', verifyJWT, async (req, res) => {

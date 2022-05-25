@@ -1,8 +1,5 @@
 import React from 'react'
 import { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import auth from "../../firebase.init";
 
 const ManageProducts = () => {
     const [Itemes, setItemes] = useState([]);
@@ -17,7 +14,7 @@ const ManageProducts = () => {
             .then((data) => setItemes(data));
     }, []);
 
-    // delete button
+    // EVENT HANDLER FOR DELETE BUTTON
     const handleDelete = id => {
         console.log(id)
         const proceed = window.confirm('are you sure deleteing');
