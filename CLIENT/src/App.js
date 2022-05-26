@@ -37,7 +37,6 @@ function App() {
         <Route path="/blog" element={<Blogs />} />
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/signUp" element={<SignUp />} />
-        {/* <Route path="/purchase" element={<RequireAuth><Purchase /></RequireAuth>} /> */}
         <Route path="dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} >
           <Route index element={<MyOrders></MyOrders>}></Route>
           <Route path="myAccount" element={<MyAccount></MyAccount>}></Route>
@@ -71,7 +70,7 @@ function App() {
         </Route>
 
 
-        <Route path="purchase/:id" element={<Purchase />}></Route>
+        <Route path="purchase/:id" element={<RequireAuth><Purchase /></RequireAuth>}></Route>
         <Route path="/*" element={<NotFound></NotFound>} />
       </Routes>
 
