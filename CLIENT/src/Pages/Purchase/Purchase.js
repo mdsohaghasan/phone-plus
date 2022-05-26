@@ -1,51 +1,42 @@
-import React, {
-    // useEffect,
-    useState
-} from 'react'
+import React from 'react'
+import { useState, useEffect } from "react";
+import Loading from '../../Components/Loading/Loading';
 // import Products from '../Home/Products/Products'
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PurchaseCard from './PurchaseCard';
 import PurchaseModal from './PurchaseModal';
-
+import { useQuery } from 'react-query';
 
 
 const Purchase = () => {
-    const [items, setItems] = useState(null);
+    const [product, setItems] = useState([]);
+    const { id } = useParams();
+    const url = `http://localhost:5000/products/${id}`;
 
-    // const { id } = useParams();
-    // const [Itemes, setItemes] = useState([]);
-    // useEffect(() => {
-    //     const url = `http://localhost:5000/products/${id}`;
-    //     console.log(url)
-    //     fetch(url)
-    //         .then((res) => res.json())
-    //         .then((data) => setItemes(data));
-    // }, []);
-
-
-    const PurchaseItems = [
-        {
-            _id: 1,
-            name: 'Fluoride Treatment',
-            price: 100,
-            shortDesc: 'Now you can use React Router anywhere in your app! For a simple example, open'
-            // img: fluoride
-        },
-        {
-            _id: 2,
-            name: 'Cavity Filling',
-            price: 200,
-            shortDesc: 'Now you can use React Router anywhere in your app! For a simple example, open'
-            // img: cavity
-        },
-        {
-            _id: 3,
-            name: 'Teeth Whitening',
-            price: 300,
-            shortDesc: 'Now you can use React Router anywhere in your app! For a simple example, open'
-            // img: whitening
+    const { data: products, isLoading } = useQuery(['PurchaseInfo', id], () => fetch(url, {
+        method: 'GET',
+        headers: {
+            'authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
-    ];
+    }).then(res => res.json()));
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
+
+
+    //---------------------------------
+    // const [items, setItems] = useState([]);
+    // useEffect(() => {
+    //     const url = `http://localhost:5000/products/`
+    //     fetch(url, {
+    //         headers: {
+    //             authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    //         }
+    //     })
+    //         .then((res) => res.json())
+    //         .then((data) => setItems(data));
+    // }, []);
 
     return (
         <div>
@@ -53,18 +44,42 @@ const Purchase = () => {
             <div className=''>
                 <h3 className='text-primary text-5xl my-10'>Our PurchaseItems</h3>
             </div>
-            <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 m-20'>
+            <div className='w-4/5  m-auto '>
+                <div class="card lg:card-side bg-base-100 shadow-xl">
+                    <figure><img src={products.img} alt="Album" /></figure>
+                    <div class="card-body">
+                        <div class="overflow-x-auto">
+                            <table class="table table-zebra w-full">
+                                <tbody>
+                                    <tr>
+                                        <th>1</th>
+                                        <td>Product Name</td>
+                                        <td>{products.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>2</th>
+                                        <td>Product Price</td>
+                                        <td>{products.price}</td>
+                                    </tr>
 
-                {
-                    PurchaseItems.map(product => <PurchaseCard
-                        key={product._id}
-                        product={product}
-                        setItems={setItems}
-                    ></PurchaseCard>)
+                                    <tr>
+                                        <th>3</th>
+                                        <td>ShortDesc</td>
+                                        <td>{products.shortDesc}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="card-actions justify-end">
+                                <label onClick={() => setItems(products)} for="PurchaseModal" class="btn modal-button">open modal</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                }
             </div>
-            {items && <PurchaseModal items={items} setItems={setItems}></PurchaseModal>}
+            {product && <PurchaseModal product={product} setItems={setItems}></PurchaseModal>}
+            {/* {items && <PurchaseModal items={items} setItems={setItems}></PurchaseModal>} */}
+            {/* {items && <PurchaseModal items={items} setItems={setItems}></PurchaseModal>} */}
 
         </div>
 
@@ -73,3 +88,5 @@ const Purchase = () => {
 }
 
 export default Purchase
+
+// http://localhost:5000/products/

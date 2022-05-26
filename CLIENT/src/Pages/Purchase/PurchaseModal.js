@@ -3,19 +3,20 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 
-const PurchaseModal = ({ items, setItems }) => {
+const PurchaseModal = ({ product, setItems }) => {
     const [user, loading, error] = useAuthState(auth);
 
     const handleBooking = event => {
         event.preventDefault();
         const PurchaseInfo = {
-            productId: items._id,
-            product: items.name,
-            Price: items.price,
+            productId: product._id,
+            product: product.name,
+            Price: product.price,
             customerName: user.displayName,
             customerEmail: user.email,
             phone: event.target.phone.value,
-            ShortDes: items.shortDesc
+            ShortDes: product.shortDesc,
+            photo: product.img
         }
 
         fetch('http://localhost:5000/PurchaseInfo', {
@@ -44,9 +45,9 @@ const PurchaseModal = ({ items, setItems }) => {
             <input type="checkbox" id="PurchaseModal" class="modal-toggle" />
             <div class="modal modal-bottom sm:modal-middle">
                 <div class="modal-box">
-                    <h3 class="font-bold text-lg">Your Product is {items.name} </h3>
-                    <h3 class="font-bold text-lg">Your Product is {items.price} </h3>
-                    <p class="py-4">{items.shortDesc}</p>
+                    <h3 class="font-bold text-lg">Your Product is {product.name} </h3>
+                    <h3 class="font-bold text-lg">Your Product is {product.price} </h3>
+                    <p class="py-4">{product.shortDesc}</p>
                     <form onSubmit={handleBooking} className='grid grid-cols-1 gap-3 justify-items-center mt-2'>
                         <input type="text" name="name" disabled value={user?.displayName || ''} className="input input-bordered w-full max-w-xs" />
                         <input type="email" name="email" disabled value={user?.email || ''} className="input input-bordered w-full max-w-xs" />

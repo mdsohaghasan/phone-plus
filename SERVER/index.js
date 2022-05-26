@@ -103,9 +103,9 @@ async function run() {
         //------------------------------------//
         // PRODUCT GET , POST , DELETE ENDPOINT
         //------------------------------------//
-
+        ////--------------------------------------------------------------
         // PRODUCT ITEM LOAD ENDPOINT
-        app.get('/products', verifyJWT, async (req, res) => {
+        app.get('/products', async (req, res) => {
             const query = {};
             const cursor = productsCollection.find(query);
             // .project({ name: 1 });
@@ -113,6 +113,14 @@ async function run() {
             res.send(items)
         });
 
+        // test detail
+        app.get('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const ProductInfo = await productsCollection.findOne(query);
+            res.send(ProductInfo);
+        })
+        ////-----------------------------------------------------------------------------
         // POST PRODUCT ON MANAGEPRODUCT PAGE BY ADMIN
         app.post('/products', verifyJWT, async (req, res) => {
             const products = req.body;
@@ -179,7 +187,7 @@ async function run() {
         // PAYMENT ENDPOINT 
         //----------------//
 
-        // LOAD SINGLE PurchaseInfo ON PAYMENT PAGE
+        // LOAD SINGLE Purchasedetails ON PAYMENT PAGE
         app.get('/PurchaseInfo/:id', verifyJWT, async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
