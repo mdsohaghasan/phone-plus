@@ -2,8 +2,8 @@
     width: 30px;
 }
 
-/* .contact-bg {
-    background-image: url("img/contact.png");
+.contact-bg {
+    background-image: url("../../images/about/contact.png");
     background-repeat: no-repeat;
     background-size: cover;
-} */
+}

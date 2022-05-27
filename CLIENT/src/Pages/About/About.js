@@ -80,14 +80,21 @@ const About = () => {
             <div class="contact-bg">
                 <div class="row ">
                     <div class="col-6"></div>
-                    <div class="col-6">
+                    <div class="card w-96 bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <h2 class="card-title">Email</h2>
+                            <h2 class="card-title">gfjhgfjhg</h2>
+                            <p>hgfkjhgfkjhghj</p>
+                        </div>
+                    </div>
+                    {/* <div class="col-6">
                         <div class="contact-box bg-info w-75 p-5 m-5">
                             <h3>Email</h3>
                             <h5>mailsohaghasan@gmail.com</h5>
                             <address>Address</address>
                             <p>Mohammadpur,Dhaka</p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
