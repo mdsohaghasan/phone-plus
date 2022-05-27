@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "mobile-pluss",
     "public": "build",
     "ignore": [
       "firebase.json",

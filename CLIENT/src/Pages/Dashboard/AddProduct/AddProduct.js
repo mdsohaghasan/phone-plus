@@ -30,7 +30,7 @@ const AddProduct = () => {
                         img: img
                     }
                     // send to your database 
-                    fetch('http://localhost:5000/products', {
+                    fetch('https://obscure-cove-62090.herokuapp.com/products', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',
@@ -42,11 +42,11 @@ const AddProduct = () => {
                         .then(inserted => {
                             console.log('product er data paisi', inserted)
                             if (inserted.insertedId) {
-                                toast.success('Doctor added successfully')
+                                toast.success('product add hoise successfully')
                                 reset();
                             }
                             else {
-                                toast.error('Failed to add the doctor');
+                                toast.error('Failed  product');
                             }
                         })
 

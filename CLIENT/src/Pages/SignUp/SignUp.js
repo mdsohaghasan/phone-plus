@@ -21,7 +21,6 @@ const SignUp = () => {
     const from = location.state?.from?.pathname || '/'
     if (token) {
         navigate(from, { replace: true });
-        // console.log(user || gUser)
     }
 
 
@@ -109,9 +108,6 @@ const SignUp = () => {
                                     {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                 </label>
                                 {signInError}
-                                {/* <label class="label">
-                                    <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
-                                </label> */}
                                 <div class="form-check ">
                                     <input onClick={() => setAgree(!agrre)} type="checkbox" name='terms' id="exampleCheck1" />
                                     <label className={`ps-2 ${agrre ? '' : `text-danger`}`} for="exampleCheck1">Accept Plus Terms</label>

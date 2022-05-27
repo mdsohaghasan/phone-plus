@@ -1,6 +1,5 @@
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 
 const PurchaseModal = ({ product, setItems }) => {
@@ -19,7 +18,7 @@ const PurchaseModal = ({ product, setItems }) => {
             photo: product.img
         }
 
-        fetch('http://localhost:5000/PurchaseInfo', {
+        fetch('https://obscure-cove-62090.herokuapp.com/PurchaseInfo', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -28,15 +27,7 @@ const PurchaseModal = ({ product, setItems }) => {
         })
             .then(res => res.json())
             .then(data => {
-                // if (data.success) {
-                //     toast(`Appointment is set,${data.PurchaseInfo?.product} at ${data.PurchaseInfo?.customerEmail} `)
-                // }
-                // else {
-                //     toast.error(`Already have and appointment on ${data.PurchaseInfo?.product} at ${data.PurchaseInfo?.customerEmail}`)
-                // }
                 setItems(null);
-                console.log('booking for you ', data)
-                // refetch();
             });
 
     }

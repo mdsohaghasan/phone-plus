@@ -5,7 +5,7 @@ const ManageOrders = () => {
 
     const [Itemes, setItemes] = useState([]);
     useEffect(() => {
-        const url = `http://localhost:5000/PurchaseInfo`
+        const url = `https://obscure-cove-62090.herokuapp.com/PurchaseInfo`
         fetch(url, {
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

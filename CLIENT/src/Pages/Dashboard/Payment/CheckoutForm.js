@@ -11,7 +11,7 @@ const CheckoutForm = ({ Purchase }) => {
     const [transactionId, setTransactionId] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:5000/create-payment-intent', {
+        fetch('https://obscure-cove-62090.herokuapp.com/create-payment-intent', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -77,7 +77,7 @@ const CheckoutForm = ({ Purchase }) => {
                 Purchase: _id,
                 transactionId: paymentIntent.id
             }
-            fetch(`http://localhost:5000/PurchaseInfo/${_id}`, {
+            fetch(`https://obscure-cove-62090.herokuapp.com/PurchaseInfo/${_id}`, {
                 method: 'PATCH',
                 headers: {
                     'content-type': 'application/json',

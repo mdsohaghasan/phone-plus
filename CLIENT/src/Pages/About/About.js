@@ -48,10 +48,12 @@ const About = () => {
 
                 </div>
                 <div class="col">
-                    <div class="radial-progress text-primary
-                        style={{ --value: '70%' }}">70%</div>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod, molestiae?
-                    </p>
+                    <div class="contact-box bg-info w-75 p-5 m-5">
+                        <h3>Email</h3>
+                        <h5>mailsohaghasan@gmail.com</h5>
+                        <address>Address</address>
+                        <p>Mohammadpur,Dhaka</p>
+                    </div>
                 </div>
             </div>
 
@@ -59,44 +61,24 @@ const About = () => {
                 <div class="col-4">
                     <div class="border border-primary border-3 rounded m-3 p-3">
                         <i class="bi bi-apple text-primary"></i>
-                        <p>Apple</p>
+                        <p>React Js</p>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="border border-primary border-3 rounded m-3 p-3">
                         <i class="bi bi-apple text-primary"></i>
-                        <p>Apple</p>
+                        <p>Express Js</p>
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="border border-primary border-3 rounded m-3 p-3">
                         <i class="bi bi-apple text-primary"></i>
-                        <p>Apple</p>
+                        <p>Node Js</p>
                     </div>
                 </div>
             </div>
-            {/* contact section  */}
-            <div class="contact-bg">
-                <div class="row ">
-                    <div class="col-6"></div>
-                    <div class="card w-96 bg-base-100 shadow-xl">
-                        <div class="card-body">
-                            <h2 class="card-title">Email</h2>
-                            <h2 class="card-title">gfjhgfjhg</h2>
-                            <p>hgfkjhgfkjhghj</p>
-                        </div>
-                    </div>
-                    {/* <div class="col-6">
-                        <div class="contact-box bg-info w-75 p-5 m-5">
-                            <h3>Email</h3>
-                            <h5>mailsohaghasan@gmail.com</h5>
-                            <address>Address</address>
-                            <p>Mohammadpur,Dhaka</p>
-                        </div>
-                    </div> */}
-                </div>
-            </div>
+
         </div>
     )
 }

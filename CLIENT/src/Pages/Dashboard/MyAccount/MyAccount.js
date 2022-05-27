@@ -1,67 +1,50 @@
 import React from 'react'
-// import { useUpdateProfile } from 'react-firebase-hooks/auth';
-// import auth from '../../firebase.init';
-// import { useForm } from "react-hook-form"
-// import { Link, useLocation, useNavigate } from 'react-router-dom';
-// import Loading from '../../Components/Loading/Loading';
-// import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
 
 const MyAccount = () => {
 
-    // const [updateProfile, updating, updateError] = useUpdateProfile(auth);
-    // const { register, formState: { errors }, handleSubmit } = useForm();
-    // const [user] = useAuthState(auth);
-
-    // const navigate = useNavigate();
-    // const location = useLocation();
-    // const from = location.state?.from?.pathname || '/'
-    // if (user) {
-    //     console.log(user)
-    // }
-
-    //---------------
-    // if (loading || updating) {
-    //     return <Loading></Loading>
-    // }
-
-    // if (error || updateError) {
-    //     signInError = <p className='text-red-500'><small>{error?.message || updateError?.message}</small></p>
-    // }
-    //-----------------
-
-    // const onSubmit = async data => {
-    //     await updateProfile({ phoneNumber: data.number });
-    //     alert('updeted name');
-    //     navigate(from, { replace: true });
-    // }
+    const [user] = useAuthState(auth);
 
     return (
         <div>
-            <h1>MyAccount section</h1>
+            <h1>MyAccount </h1>
+            <div className='w-4/5  m-auto '>
+                <div class="card lg:card-side bg-base-100 shadow-xl">
+                    <figure><img src={user.img} /></figure>
+                    <div class="card-body">
+                        <div class="overflow-x-auto">
+                            <table class="table table-zebra w-full">
+                                <tbody>
+                                    <tr>
+                                        <th>1</th>
+                                        <td>Name</td>
+                                        <td>{user.displayName}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>2</th>
+                                        <td>Email Address</td>
+                                        <td>{user.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>3</th>
+                                        <td>Phone Number</td>
+                                        <td><img src={user.phoneNumber}></img></td>
+                                    </tr>
+                                    <tr>
+                                        <th>4</th>
+                                        <td>Photo</td>
+                                        <td><img src={user.photoURL}></img></td>
+                                    </tr>
 
-            {/* // <div class="card-body">
-        //     <form onSubmit={handleSubmit(onSubmit)}>
-        //         <div class="form-control">
-        //             <label class="label">
-        //                 <span class="label-text">phoneNumber</span>
-        //             </label>
-        //             <input type="number" placeholder="Enter Your phoneNumber" class="input input-bordered"
-        //                 {...register("number", {
-        //                     required: {
-        //                         value: true,
-        //                         message: 'phoneNumber is Required'
-        //                     }
-        //                 })} />
-        //             <label className="label">
-        //                 {errors.number?.type === 'required' && <span className="label-text-alt text-red-500">{errors.number.message}</span>}
-        //             </label>
-        //         </div>
-        //         <div class="form-control mt-6">
-        //             <button class="btn btn-primary">Save</button>
-        //         </div>
-        //     </form>
-        // </div> */}
+                                </tbody>
+                            </table>
 
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
     )

@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import Loading from '../../Components/Loading/Loading';
-// import Products from '../Home/Products/Products'
 import { useParams } from 'react-router-dom';
 import PurchaseCard from './PurchaseCard';
 import PurchaseModal from './PurchaseModal';
@@ -11,7 +10,7 @@ import { useQuery } from 'react-query';
 const Purchase = () => {
     const [product, setItems] = useState([]);
     const { id } = useParams();
-    const url = `http://localhost:5000/products/${id}`;
+    const url = `https://obscure-cove-62090.herokuapp.com/products/${id}`;
 
     const { data: products, isLoading } = useQuery(['PurchaseInfo', id], () => fetch(url, {
         method: 'GET',
@@ -23,20 +22,6 @@ const Purchase = () => {
     if (isLoading) {
         return <Loading></Loading>
     }
-
-
-    //---------------------------------
-    // const [items, setItems] = useState([]);
-    // useEffect(() => {
-    //     const url = `http://localhost:5000/products/`
-    //     fetch(url, {
-    //         headers: {
-    //             authorization: `Bearer ${localStorage.getItem('accessToken')}`
-    //         }
-    //     })
-    //         .then((res) => res.json())
-    //         .then((data) => setItems(data));
-    // }, []);
 
     return (
         <div>
@@ -78,8 +63,6 @@ const Purchase = () => {
 
             </div>
             {product && <PurchaseModal product={product} setItems={setItems}></PurchaseModal>}
-            {/* {items && <PurchaseModal items={items} setItems={setItems}></PurchaseModal>} */}
-            {/* {items && <PurchaseModal items={items} setItems={setItems}></PurchaseModal>} */}
 
         </div>
 
@@ -88,5 +71,3 @@ const Purchase = () => {
 }
 
 export default Purchase
-
-// http://localhost:5000/products/

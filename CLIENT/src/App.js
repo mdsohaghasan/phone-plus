@@ -23,6 +23,7 @@ import ManageProducts from './Pages/Dashboard/ManageProducts/ManageProducts';
 import ManageUsers from './Pages/Dashboard/ManageUsers/ManageUsers';
 import ManageOrders from './Pages/Dashboard/ManageOrders/ManageOrders';
 import RequireAdmin from './Hooks/RequireAdmin/RequireAdmin.JS';
+import AddReview from './Pages/Dashboard/MyReviews/AddReview';
 
 function App() {
   return (
@@ -41,25 +42,26 @@ function App() {
           <Route index element={<MyOrders></MyOrders>}></Route>
           <Route path="myAccount" element={<MyAccount></MyAccount>}></Route>
           <Route path="myReviews" element={<MyReviews></MyReviews>}></Route>
+          <Route path="addReview" element={<RequireAuth><AddReview /></RequireAuth>}></Route>
           <Route path="payment/:id" element={<Payment />}></Route>
 
           {/* ADMIN ROUTE ---------- */}
           <Route path="addProduct" element={
-            // <RequireAdmin>
+            //  <RequireAdmin>
             <AddProduct />
-            // </RequireAdmin> 
+            //  </RequireAdmin>
           }></Route>
 
           <Route path="manageProducts" element={
             // <RequireAdmin>
             <ManageProducts />
-            // </RequireAdmin> 
+            // </RequireAdmin>
           }></Route>
 
           <Route path="manageusers" element={
-            // <RequireAdmin>
+            //  <RequireAdmin>
             <ManageUsers />
-            // </RequireAdmin>
+            //  </RequireAdmin>
           }></Route>
 
           <Route path="manageOrders" element={

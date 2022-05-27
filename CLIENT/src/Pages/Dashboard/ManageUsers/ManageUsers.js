@@ -5,7 +5,7 @@ import UsersList from './UsersList';
 
 const ManageUsers = () => {
 
-    const { data: users, isLoading, refetch } = useQuery('users', () => fetch('http://localhost:5000/manageusers', {
+    const { data: users, isLoading, refetch } = useQuery('users', () => fetch('https://obscure-cove-62090.herokuapp.com/manageusers', {
         method: 'GET',
         headers: {
             authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -15,20 +15,6 @@ const ManageUsers = () => {
     if (isLoading) {
         return <Loading></Loading>
     }
-
-    // handle admin
-    // const { email, role } = users;
-    // const handleAdmin = () => {
-    //     fetch(`http://localhost:5000/manageusers/admin/${email}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             authorization: `Bearer ${localStorage.getItem('accessToken')}`
-    //         }
-    //     })
-    //         .then(res => res.json()
-    //         )
-    //         .then(data => refetch())
-    // }
 
     return (
         <div>
@@ -44,16 +30,6 @@ const ManageUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-
-                        {/* {
-                            users.map((user, index) => <tr key={user._id}>
-                                <th>{index + 1}</th>
-                                <td>{user.email}</td>
-                                <td>{user.role !== 'admin' && <button onClick={handleAdmin} class="btn btn-xs">Add  Admin</button>}</td>
-                                <td><button class="btn btn-xs">Remove User</button></td>
-                            </tr>)
-                        } */}
-
 
                         {
                             users.map(user => <UsersList
