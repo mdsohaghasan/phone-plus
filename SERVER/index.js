@@ -11,7 +11,6 @@ app.use(cors())
 app.use(express.json())
 
 
-
 // MONGODB CONNECTION
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pajtj.mongodb.net/?retryWrites=true&w=majority`;
@@ -102,26 +101,60 @@ async function run() {
         })
 
         //------------------------------------//
-        // PRODUCT GET , POST , DELETE ENDPOINT
+        // Review GET , POST , DELETE ENDPOINT
         //------------------------------------//
-        ////--------------------------------------------------------------
-        // PRODUCT ITEM LOAD ENDPOINT
-        app.get('/products', async (req, res) => {
+
+        // Review ITEM LOAD ENDPOINT
+        app.get('/reviews', async (req, res) => {
             const query = {};
-            const cursor = productsCollection.find(query);
-            // .project({ name: 1 });
+            const cursor = reviewsCollection.find(query);
             const items = await cursor.toArray();
             res.send(items)
         });
 
-        // test detail
+        // LOAD Review  ON MY Review PAGE 
+        app.get('/reviews', verifyJWT, async (req, res) => {
+            const customerEmail = req.query.customerEmail;
+            const decodedEmail = req.decoded.email;
+            if (customerEmail === decodedEmail) {
+                const query = { customerEmail: customerEmail };
+                const reviews = await reviewsCollection.find(query).toArray();
+                return res.send(reviews);
+            }
+            else {
+                return res.status(403).send({ message: 'forbidden access' });
+            }
+        });
+
+        // POST Review ON ADD Review PAGE BY USER
+        app.post('/reviews', verifyJWT, async (req, res) => {
+            const review = req.body;
+            const result = await reviewsCollection.insertOne(review);
+            res.send(result);
+        });
+
+
+
+        //------------------------------------//
+        // PRODUCT GET , POST , DELETE ENDPOINT
+        //------------------------------------//
+
+        // ALL PRODUCT ITEM LOAD ENDPOINT
+        app.get('/products', async (req, res) => {
+            const query = {};
+            const cursor = productsCollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items)
+        });
+
+        // PRODUCT DETAILS LOAD ON PURCHASE PAGE
         app.get('/products/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const ProductInfo = await productsCollection.findOne(query);
             res.send(ProductInfo);
         })
-        ////-----------------------------------------------------------------------------
+
         // POST PRODUCT ON MANAGEPRODUCT PAGE BY ADMIN
         app.post('/products', verifyJWT, async (req, res) => {
             const products = req.body;
